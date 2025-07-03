@@ -1,4 +1,4 @@
-# 🎷 Whisper-Based Offline Transcription Tool
+# 🎧 Whisper-Based Offline Transcription Tool
 
 ## 📝 Overview
 
@@ -6,17 +6,18 @@ This project is a Python-based offline transcription tool built around OpenAI’
 
 Designed using **object-oriented software architecture**, this tool is ideal for developers with C# or Java backgrounds who prefer structured, maintainable code.
 
----
+It is intended for:
 
-## 🌟 Purpose
-
-This tool solves the need for a **private, automated, offline transcription system**. It supports a clean CLI interface, folder-based input/output, and extensible modules for future upgrades.
+* Researchers and educators working with recorded interviews or lectures
+* Media producers managing large libraries of audio/video content
+* Developers and data scientists who want to integrate ASR into workflows
+* Anyone needing fast, offline transcription without exposing sensitive data
 
 ---
 
 ## 🧱 Features
 
-* 🔍 Transcribe `.mp4`, `.mp3`, `.wav`, and more using `whisper-large-v3`
+* 🔍 Transcribe `.mp4`, `.mp3`, `.wav`, and more using `whisper-medium` (default)
 * 📂 Scan all files in an `unprocessed/` folder
 * 📄 Output `.txt` files to a `processed/` folder with matching filenames
 * 🔧 OOP design: easily extensible with future features (e.g., SRT, language override)
@@ -29,17 +30,16 @@ This tool solves the need for a **private, automated, offline transcription syst
 ```plaintext
 J:\repos\huggingface_transcribe\
 ├── env\                         # Python virtual environment
-├── transcribe.py                # CLI entry point (main script)
-├── transcriber.py               # TranscriptionEngine class
-├── file_manager.py              # FileManager class
+├── src\                         # Source code modules
+│   ├── transcribe.py            # CLI entry point
+│   ├── transcriber.py           # TranscriptionEngine class
+│   └── file_manager.py          # FileManager class
 ├── unprocessed\                 # Drop files here for transcription
-│   ├── myvideo.mp4
-│   └── meeting.wav
 ├── processed\                   # Output transcripts
-│   ├── myvideo.txt
-│   └── meeting.txt
-├── README.md                    # Project overview and instructions
-└── DESIGN_GOALS.md              # Software design rationale
+├── README.md                    # Project overview and usage
+├── agent.md                     # Agent behavior and workflow rules
+├── design_goals.md              # Software architecture principles
+└── build.md                     # Development checklist
 ```
 
 ---
@@ -52,15 +52,15 @@ J:\repos\huggingface_transcribe\
 
    * Supported formats: `.mp4`, `.mp3`, `.wav`, `.m4a`, etc.
 
-2. **Run the transcription script** from the root directory:
+2. **Run the transcription script** from the `src/` directory:
 
    ```bash
-   python transcribe.py
+   python src/transcribe.py
    ```
 
 3. The script:
 
-   * Loads the `whisper-large-v3` model once
+   * Loads the `whisper-medium` model by default
    * Transcribes every media file in the `unprocessed/` folder
    * Saves each transcript to `processed/` with the same base filename and a `.txt` extension
 
@@ -82,7 +82,7 @@ J:\repos\huggingface_transcribe\
 
 ### 📦 Install Dependencies
 
-From your working folder:
+From your project root folder:
 
 ```bash
 cd J:\repos\huggingface_transcribe
@@ -99,16 +99,9 @@ pip install ffmpeg-python
 
 ## ⚙️ Configuration
 
-Currently hardcoded values (can be refactored later):
-
 * **Input folder**: `unprocessed/`
 * **Output folder**: `processed/`
-* **Model**: `"large-v3"` (You may switch to `"medium"` or `"small"` for lower RAM)
-
-Planned support for:
-
-* Language override
-* Config files or CLI flags
+* **Model**: `"medium"` by default; switchable via future config or CLI
 
 ---
 
@@ -150,3 +143,7 @@ The Whisper model is provided by [OpenAI](https://github.com/openai/whisper), al
 * [Hugging Face](https://huggingface.co/openai/whisper-large-v3) – model hosting
 * FFmpeg – audio preprocessing
 * Python community – tools and ecosystem
+
+---
+
+> This `README.md` now reflects the streamlined planning structure. All relevant implementation context is consolidated in `agent.md`, `build.md`, and `design_goals.md`.
