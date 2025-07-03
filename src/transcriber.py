@@ -8,7 +8,7 @@ class TranscriptionEngine:
     Object-oriented wrapper for Whisper model transcription.
     """
 
-    def __init__(self, model_size: str = "medium") -> None:
+    def __init__(self, model_size: str = "tiny") -> None:
         """
         Initialize the engine with the specified Whisper model.
         Loads the model and catches/report load-time errors.
