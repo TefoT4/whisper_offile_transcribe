@@ -14,6 +14,37 @@ start
 
 Upon receiving this command, the agent must:
 
+### 🛠️ Pre-Checklist Protocol (Run Once Per Feature)
+
+1. 📦 Ensure all required packages are identified:
+
+   * Determine which packages are needed for upcoming implementation
+   * Create or update a `requirements.txt` file
+   * Prompt the developer to run:
+
+     ```bash
+     pip install -r requirements.txt
+     ```
+   * Do not proceed until the developer confirms dependencies are installed
+
+2. 🌿 Create a new branch from `master`:
+
+   * Derive the branch name from the checklist item (e.g., `feature/transcription-engine`)
+   * Execute:
+
+     ```bash
+     git checkout master
+     git pull origin master
+     git checkout -b feature/<item-name>
+     ```
+   * Confirm the branch has been created before modifying any files
+
+---
+
+## 🔁 Build Execution Workflow
+
+Once the pre-checklist protocol is complete:
+
 1. 📚 Re-gather context from the following Markdown documents:
 
    * `agent.md` (this file)
@@ -46,7 +77,7 @@ Upon receiving this command, the agent must:
 
 ---
 
-## 📐 Coding Philosophy (from context\_guide.md & design\_goals.md)
+## 📐 Coding Philosophy (from design\_goals.md)
 
 * Follow OOP principles strictly: classes per concept, single responsibility
 * Use Python 3.10+ features: type hints, docstrings, `pathlib.Path`
@@ -60,7 +91,7 @@ Upon receiving this command, the agent must:
 
 ---
 
-## 🔧 Git and Workflow Rules (from git\_guide.md)
+## 🔧 Git and Workflow Rules
 
 * All work must occur on a `feature/...` branch
 * The developer will manually merge PRs into `master` via GitHub
@@ -75,15 +106,17 @@ Upon receiving this command, the agent must:
 
 ## 📌 Agent Behavior Summary
 
-| Task                  | Behavior                                                       |
-| --------------------- | -------------------------------------------------------------- |
-| Gather Context        | Re-read `agent.md`, `build.md`, `design_goals.md`, `README.md` |
-| Execute Task          | Follow `build.md` checklist one item at a time                 |
-| Show Result           | Present code summary or diff                                   |
-| Wait for Confirmation | Ask developer to test and explicitly say `commit`              |
-| Commit                | Propose message → Commit → Push to current feature branch      |
-| Respect Boundaries    | Only use `src/`, `unprocessed/`, `processed/` folders          |
+| Task                  | Behavior                                                              |
+| --------------------- | --------------------------------------------------------------------- |
+| Gather Context        | Re-read `agent.md`, `build.md`, `design_goals.md`, `README.md`        |
+| Install Dependencies  | Add required packages to `requirements.txt` and ask for install first |
+| Create Branch         | Always start a new `feature/...` branch before writing code           |
+| Execute Task          | Follow `build.md` checklist one item at a time                        |
+| Show Result           | Present code summary or diff                                          |
+| Wait for Confirmation | Ask developer to test and explicitly say `commit`                     |
+| Commit                | Propose message → Commit → Push to current feature branch             |
+| Respect Boundaries    | Only use `src/`, `unprocessed/`, `processed/` folders                 |
 
 ---
 
-> This document replaces `context_guide.md` and incorporates relevant elements from `git_guide.md` and `product_information.md`. You may now delete these files from the workspace to reduce clutter and token usage. It ensures the agent remains modular, efficient, and human-directed in all phases of development.
+> This document enables the agent to operate in a fully guided, context-aware, test-driven coding loop — while enforcing quality and development discipline.
