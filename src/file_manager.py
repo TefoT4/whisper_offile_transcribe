@@ -1,5 +1,9 @@
+
 from pathlib import Path
 from typing import List
+
+def log(msg: str, level: str = "INFO"):
+    print(f"[{level}] {msg}")
 
 class FileManager:
     """
@@ -15,7 +19,7 @@ class FileManager:
         unprocessed = Path(__file__).resolve().parent.parent / "unprocessed"
 
         if not unprocessed.exists() or not unprocessed.is_dir():
-            print(f"[ERROR] Input folder does not exist: {unprocessed}")
+            log(f"Input folder does not exist: {unprocessed}", level="ERROR")
             return None
         files = [f for f in unprocessed.iterdir() if f.suffix.lower() in allowed_exts and f.is_file()]
         return sorted(files)
@@ -30,4 +34,4 @@ class FileManager:
         out_path = processed / out_name
         with out_path.open('w', encoding='utf-8') as f:
             f.write(text)
-        print(f"[DONE] Saved transcript: {out_path}")
+        log(f"Saved transcript: {out_path}", level="DONE")
