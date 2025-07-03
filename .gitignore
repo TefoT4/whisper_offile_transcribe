@@ -209,4 +209,4 @@ __marimo__/
 # local
 unprocessed/
 processed/
-test_transcribe.py
+test_*.py
