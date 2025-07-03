@@ -1,6 +1,5 @@
 
 from pathlib import Path
-from typing import Optional
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -40,8 +39,17 @@ class TranscriptionEngine:
             print(f"[TranscriptionEngine] Input file does not exist: {input_path}")
             return ""
         try:
+            self.check_ffmpeg()
             result = self.model.transcribe(str(input_path))
             return result.get("text", "")
         except Exception as e:
             print(f"[TranscriptionEngine] Transcription failed: {e}")
             return ""
+    
+    def check_ffmpeg(self):
+        try:
+            import subprocess
+            subprocess.run(["ffmpeg", "-version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print("[INFO] FFmpeg is available.")
+        except Exception as e:
+            print("[ERROR] FFmpeg not found or not in PATH.", e)

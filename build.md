@@ -29,27 +29,26 @@ The agent must configure this path by ensuring the environment variable is loade
 - [x] Create `src/transcriber.py`
 - [x] Define `TranscriptionEngine` class
 
-  - [ ] Add `__init__(self, model_size: str = "medium")`
+  - [x] Add `__init__(self, model_size: str = "medium")`
 
-    - [ ] Load Whisper model using `whisper.load_model(...)`
-    - [ ] Catch and report load-time errors
+    - [x] Load Whisper model using `whisper.load_model(...)`
+    - [x] Catch and report load-time errors
 
-  - [ ] Add `transcribe(self, input_path: Path) -> str`
+  - [x] Add `transcribe(self, input_path: Path) -> str`
+    - [x] Validate input file exists
+    - [x] Run `model.transcribe()`
+    - [x] Return plain string transcript
 
-    - [ ] Validate input file exists
-    - [ ] Run `model.transcribe()`
-    - [ ] Return plain string transcript
-
-- [ ] Manually test transcription of `.mp3`, `.mp4` and `.wav` files
-- [ ] Ensure model runs with **CPU-only**, no GPU assumptions
-- [ ] Create a `.env` file at the project root with:
+- [x] Manually test transcription of `.mp3`, `.mp4` and `.wav` files
+- [x] Ensure model runs with **CPU-only**, no GPU assumptions
+- [x] Create a `.env` file at the project root with:
 
   ```env
   WHISPER_CACHE=E:\whisper-cache
   ```
 
-- [ ] Install `python-dotenv` and import it in `transcriber.py` to ensure the environment variable is loaded
-- [ ] Ensure model is downloaded into `E:\whisper-cache` by verifying the download path
+- [x] Install `python-dotenv` and import it in `transcriber.py` to ensure the environment variable is loaded
+- [x] Ensure model is downloaded into `E:\whisper-cache` by verifying the download path
 
 #### `feature/file-manager`
 
