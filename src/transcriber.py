@@ -23,21 +23,25 @@ class TranscriptionEngine:
             print(f"[TranscriptionEngine] Failed to load Whisper model '{self.model_size}': {e}")
             self.model = None
 
-    def transcribe(self, audio_path: Path) -> Optional[str]:
+    def transcribe(self, input_path: Path) -> str:
         """
         Transcribe an audio or video file to text.
 
         Args:
-            audio_path (Path): Path to the audio or video file.
+            input_path (Path): Path to the audio or video file.
 
         Returns:
-            Optional[str]: The transcribed text, or None if failed.
+            str: The transcribed text, or an empty string if failed.
         """
         if self.model is None:
             print("[TranscriptionEngine] Model not loaded. Cannot transcribe.")
-            return None
+            return ""
+        if not input_path.exists():
+            print(f"[TranscriptionEngine] Input file does not exist: {input_path}")
+            return ""
         try:
-            result = self.model.transcribe(str(audio_path))
+            result = self.model.transcribe(str(input_path))
             return result.get("text", "")
-        except Exception:
-            return None
+        except Exception as e:
+            print(f"[TranscriptionEngine] Transcription failed: {e}")
+            return ""
