@@ -1,4 +1,4 @@
-# 🛠️ BUILD.md – Feature Development Checklist for Coding Agent
+# 🔨 BUILD.md – Feature Development Checklist for Coding Agent
 
 This document is a live **vibe-coding tracker** and checklist. It guides coding agents through the step-by-step implementation of the Whisper Transcription Tool, aligned with the context and standards defined in `agent.md`.
 
@@ -14,9 +14,9 @@ The agent must configure this path by ensuring the environment variable is loade
 
 ## 🔗 Related Documents
 
-- [`agent.md`](./agent.md) – Central context and behavior guide
-- [`README.md`](./README.md) – Project summary and usage
-- [`design_goals.md`](./design_goals.md) – Software design principles
+* [`agent.md`](./agent.md) – Central context and behavior guide
+* [`README.md`](./README.md) – Project summary and usage
+* [`design_goals.md`](./design_goals.md) – Software design principles
 
 ---
 
@@ -26,58 +26,65 @@ The agent must configure this path by ensuring the environment variable is loade
 
 #### `feature/transcription-engine`
 
-- [x] Create `src/transcriber.py`
-- [x] Define `TranscriptionEngine` class
+* [x] Create `src/transcriber.py`
 
-  - [x] Add `__init__(self, model_size: str = "medium")`
+* [x] Define `TranscriptionEngine` class
 
-    - [x] Load Whisper model using `whisper.load_model(...)`
-    - [x] Catch and report load-time errors
+  * [x] Add `__init__(self, model_size: str = "medium")`
 
-  - [x] Add `transcribe(self, input_path: Path) -> str`
-    - [x] Validate input file exists
-    - [x] Run `model.transcribe()`
-    - [x] Return plain string transcript
+    * [x] Load Whisper model using `whisper.load_model(...)`
+    * [x] Catch and report load-time errors
 
-- [x] Manually test transcription of `.mp3`, `.mp4` and `.wav` files
-- [x] Ensure model runs with **CPU-only**, no GPU assumptions
-- [x] Create a `.env` file at the project root with:
+  * [x] Add `transcribe(self, input_path: Path) -> str`
+
+    * [x] Validate input file exists
+    * [x] Run `model.transcribe()`
+    * [x] Return plain string transcript
+
+* [x] Manually test transcription of `.mp3`, `.mp4` and `.wav` files
+
+* [x] Ensure model runs with **CPU-only**, no GPU assumptions
+
+* [x] Create a `.env` file at the project root with:
 
   ```env
   WHISPER_CACHE=E:\whisper-cache
   ```
 
-- [x] Install `python-dotenv` and import it in `transcriber.py` to ensure the environment variable is loaded
-- [x] Ensure model is downloaded into `E:\whisper-cache` by verifying the download path
+* [x] Install `python-dotenv` and import it in `transcriber.py` to ensure the environment variable is loaded
+
+* [x] Ensure model is downloaded into `E:\whisper-cache` by verifying the download path
 
 #### `feature/file-manager`
 
-- [ ] Create `src/file_manager.py`
-- [ ] Define `FileManager` class
+* [x] Create `src/file_manager.py`
 
-  - [ ] Method: `get_audio_files(self) -> List[Path]`
+* [x] Define `FileManager` class
 
-    - [ ] Scan `unprocessed/` for allowed extensions: `.mp4`, `.mp3`, `.wav`, `.m4a`
-    - [ ] Return `Path` list sorted alphabetically
+  * [x] Method: `get_audio_files(self) -> List[Path]`
 
-  - [ ] Method: `save_transcript(self, input_path: Path, text: str)`
+    * [x] Scan `unprocessed/` for allowed extensions: `.mp4`, `.mp3`, `.wav`, `.m4a`
+    * [x] Return `Path` list sorted alphabetically
 
-    - [ ] Convert filename to `.txt`
-    - [ ] Save to `processed/` folder with UTF-8 encoding
+  * [x] Method: `save_transcript(self, input_path: Path, text: str)`
 
-- [ ] Validate folder existence and permissions
-- [ ] Manually test with at least two dummy input files
+    * [x] Convert filename to `.txt`
+    * [x] Save to `processed/` folder with UTF-8 encoding
+
+* [x] Validate folder existence and permissions
+
+* [x] Manually test with at least two dummy input files
 
 #### `feature/cli-runner`
 
-- [ ] Create `src/transcribe.py`
-- [ ] Set up script as `if __name__ == "__main__":`
-- [ ] Instantiate `FileManager` and `TranscriptionEngine`
-- [ ] Retrieve files from `unprocessed/`
-- [ ] Transcribe each file
-- [ ] Save transcripts to `processed/`
-- [ ] Print status for each file (started, finished, saved)
-- [ ] Print summary count of files processed
+* [x] Create `src/transcribe.py`
+* [x] Set up script as `if __name__ == "__main__":`
+* [x] Instantiate `FileManager` and `TranscriptionEngine`
+* [x] Retrieve files from `unprocessed/`
+* [x] Transcribe each file
+* [x] Save transcripts to `processed/`
+* [x] Print status for each file (started, finished, saved)
+* [x] Print summary count of files processed
 
 ---
 
@@ -85,26 +92,39 @@ The agent must configure this path by ensuring the environment variable is loade
 
 #### `feature/model-selection`
 
-- [ ] Accept `--model` as CLI argument
+* [ ] Clone new branch from `master` named `feature/model-selection`
+* [ ] Create or verify required pages:
 
-  - [ ] Validate against supported models: `tiny`, `base`, `small`, `medium`, `large-v3`
+  * [ ] CLI interface in `transcribe.py`
+  * [ ] Logic updates in `transcriber.py`
+* [ ] Accept `--model` as CLI argument
 
-- [ ] Pass user selection to `TranscriptionEngine`
-- [ ] Provide fallback to `medium` on invalid input
+  * [ ] Validate against supported models: `tiny`, `base`, `small`, `medium`, `large-v3`
+* [ ] Pass user selection to `TranscriptionEngine`
+* [ ] Provide fallback to `medium` on invalid input
 
 #### `feature/logging-support`
 
-- [ ] Add simple logging using `print()` with `[INFO]`, `[ERROR]`, `[DONE]` tags
-- [ ] Replace raw `print()` with wrapper logging function
-- [ ] Optionally swap in Python `logging` module with INFO/WARNING/ERROR levels
+* [ ] Clone new branch from `master` named `feature/logging-support`
+* [ ] Create or verify required pages:
+
+  * [ ] Wrapper logging method
+  * [ ] Updated console output
+* [ ] Add simple logging using `print()` with `[INFO]`, `[ERROR]`, `[DONE]` tags
+* [ ] Replace raw `print()` with wrapper logging function
+* [ ] Optionally swap in Python `logging` module with INFO/WARNING/ERROR levels
 
 #### `feature/unit-tests`
 
-- [ ] Create a `tests/` directory
-- [ ] Test `TranscriptionEngine.transcribe()` with stubbed audio file
-- [ ] Test `FileManager.get_audio_files()` with test folder
-- [ ] Test `FileManager.save_transcript()` writes correct output
-- [ ] Use `unittest` or `pytest`
+* [ ] Clone new branch from `master` named `feature/unit-tests`
+* [ ] Create or verify required pages:
+
+  * [ ] `tests/` directory and test scripts
+* [ ] Create a `tests/` directory
+* [ ] Test `TranscriptionEngine.transcribe()` with stubbed audio file
+* [ ] Test `FileManager.get_audio_files()` with test folder
+* [ ] Test `FileManager.save_transcript()` writes correct output
+* [ ] Use `unittest` or `pytest`
 
 ---
 
@@ -112,31 +132,38 @@ The agent must configure this path by ensuring the environment variable is loade
 
 #### `feature/readme-docs`
 
-- [ ] Ensure all documents reflect current implementation:
+* [ ] Clone new branch from `master` named `feature/readme-docs`
+* [ ] Create or verify required pages:
 
-  - [ ] `README.md`
-  - [ ] `agent.md`
-  - [ ] `design_goals.md`
-  - [ ] `build.md`
+  * [ ] `README.md`, `build.md`, `design_goals.md`, `agent.md`
+* [ ] Ensure all documents reflect current implementation:
+
+  * [ ] `README.md`
+  * [ ] `agent.md`
+  * [ ] `design_goals.md`
+  * [ ] `build.md`
 
 #### `feature/error-handling`
 
-- [ ] Catch unsupported file types
-- [ ] Handle missing or unreadable input files
-- [ ] Catch exceptions in `model.transcribe()` and continue to next file
-- [ ] Report meaningful error messages without crashing
+* [ ] Clone new branch from `master` named `feature/error-handling`
+* [ ] Create or verify required pages:
+
+  * [ ] File validation logic
+  * [ ] Error messaging system
+* [ ] Catch unsupported file types
+* [ ] Handle missing or unreadable input files
+* [ ] Catch exceptions in `model.transcribe()` and continue to next file
+* [ ] Report meaningful error messages without crashing
 
 ---
 
 ## 📌 Agent Rules (From `agent.md`)
 
-- All source files go under `src/`
-- Default model is `medium`
-- No GPU or cloud dependencies allowed
-- Always log file-level progress clearly
-- Use pathlib’s `Path` and type annotations
-- Whisper models must be cached in `E:\whisper-cache` using the `WHISPER_CACHE` environment variable loaded from a `.env` file using `python-dotenv`
-
----
+* All source files go under `src/`
+* Default model is `medium`
+* No GPU or cloud dependencies allowed
+* Always log file-level progress clearly
+* Use pathlib’s `Path` and type annotations
+* Whisper models must be cached in `E:\whisper-cache` using the `WHISPER_CACHE` environment variable loaded from a `.env` file using `python-dotenv`
 
 > This document is part of a lean, high-efficiency planning stack: `agent.md`, `build.md`, `design_goals.md`, and `README.md`.

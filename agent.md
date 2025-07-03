@@ -18,21 +18,9 @@ Upon receiving this command, the agent must:
 
 ### 🛠️ Pre-Checklist Protocol (Run Once Per Feature)
 
-The following steps **must be executed in strict order** before starting any work:
+The following steps **must be executed in strict order** before starting any work on a new feature:
 
-1. 🌿 **Create a new branch from `master`**:
-
-   * Derive the branch name from the checklist item (e.g., `feature/transcription-engine`)
-   * Execute:
-
-     ```bash
-     git checkout master
-     git pull origin master
-     git checkout -b feature/<item-name>
-     ```
-   * Do **not** proceed with file creation or package setup until the new branch is confirmed
-
-2. 📦 **Ensure all required packages are identified**:
+1. 📦 **Ensure all required packages are identified**:
 
    * Determine which packages are needed for upcoming implementation
    * Create or update a `requirements.txt` file
@@ -49,7 +37,7 @@ The following steps **must be executed in strict order** before starting any wor
      ```
    * Wait for the developer to confirm installation before proceeding
 
-3. 🗂️ **Set up Whisper model cache directory via .env file**:
+2. 📂 **Set up Whisper model cache directory via .env file**:
 
    * Ensure the project root contains a `.env` file with:
 
@@ -103,7 +91,7 @@ Once the pre-checklist protocol is complete:
 
 ---
 
-## 📐 Coding Philosophy (from design\_goals.md)
+## 📀 Coding Philosophy (from design\_goals.md)
 
 * Follow OOP principles strictly: classes per concept, single responsibility
 * Use Python 3.10+ features: type hints, docstrings, `pathlib.Path`
@@ -134,7 +122,7 @@ Once the pre-checklist protocol is complete:
 
 | Task                     | Behavior                                                        |
 | ------------------------ | --------------------------------------------------------------- |
-| Create Branch First      | Always start a new `feature/...` branch before any other action |
+| Create Branch First      | Defined in `build.md` as the first step per feature checklist   |
 | Install Dependencies     | Add required packages to `requirements.txt` and ask for install |
 | Use Correct Whisper      | Must use `git+https://github.com/openai/whisper.git` only       |
 | Load from .env           | Ensure `.env` sets `WHISPER_CACHE=E:\whisper-cache`             |
