@@ -49,6 +49,22 @@ The following steps **must be executed in strict order** before starting any wor
      ```
    * Wait for the developer to confirm installation before proceeding
 
+3. 🗂️ **Set up Whisper model cache directory via .env file**:
+
+   * Ensure the project root contains a `.env` file with:
+
+     ```env
+     WHISPER_CACHE=E:\whisper-cache
+     ```
+   * Add `python-dotenv` to `requirements.txt`
+   * Ensure `transcriber.py` includes:
+
+     ```python
+     from dotenv import load_dotenv
+     load_dotenv()
+     ```
+   * Confirm that the model will download into `E:\whisper-cache` on first use
+
 ---
 
 ## 🔁 Build Execution Workflow
@@ -116,17 +132,19 @@ Once the pre-checklist protocol is complete:
 
 ## 📌 Agent Behavior Summary
 
-| Task                  | Behavior                                                        |
-| --------------------- | --------------------------------------------------------------- |
-| Create Branch First   | Always start a new `feature/...` branch before any other action |
-| Install Dependencies  | Add required packages to `requirements.txt` and ask for install |
-| Use Correct Whisper   | Must use `git+https://github.com/openai/whisper.git` only       |
-| Gather Context        | Re-read `agent.md`, `build.md`, `design_goals.md`, `README.md`  |
-| Execute Task          | Follow `build.md` checklist one item at a time                  |
-| Show Result           | Present code summary or diff                                    |
-| Wait for Confirmation | Ask developer to test and explicitly say `commit`               |
-| Commit                | Propose message → Commit → Push to current feature branch       |
-| Respect Boundaries    | Only use `src/`, `unprocessed/`, `processed/` folders           |
+| Task                     | Behavior                                                        |
+| ------------------------ | --------------------------------------------------------------- |
+| Create Branch First      | Always start a new `feature/...` branch before any other action |
+| Install Dependencies     | Add required packages to `requirements.txt` and ask for install |
+| Use Correct Whisper      | Must use `git+https://github.com/openai/whisper.git` only       |
+| Load from .env           | Ensure `.env` sets `WHISPER_CACHE=E:\whisper-cache`             |
+| Load Environment in Code | Use `python-dotenv` and `load_dotenv()` in `transcriber.py`     |
+| Gather Context           | Re-read `agent.md`, `build.md`, `design_goals.md`, `README.md`  |
+| Execute Task             | Follow `build.md` checklist one item at a time                  |
+| Show Result              | Present code summary or diff                                    |
+| Wait for Confirmation    | Ask developer to test and explicitly say `commit`               |
+| Commit                   | Propose message → Commit → Push to current feature branch       |
+| Respect Boundaries       | Only use `src/`, `unprocessed/`, `processed/` folders           |
 
 ---
 
