@@ -2,6 +2,14 @@
 
 This document is a live **vibe-coding tracker** and checklist. It guides coding agents through the step-by-step implementation of the Whisper Transcription Tool, aligned with the context and standards defined in `agent.md`.
 
+⚠️ **Important Note:** During setup, all Whisper model files (e.g., `medium.pt`) must be downloaded to a controlled directory. The developer's preferred cache path is:
+
+```bash
+set WHISPER_CACHE=E:\whisper-cache
+```
+
+The agent must ensure that this environment variable is set prior to any model download to avoid writing to the default location (`~/.cache/whisper`).
+
 ---
 
 ## 🔗 Related Documents
@@ -18,8 +26,8 @@ This document is a live **vibe-coding tracker** and checklist. It guides coding 
 
 #### `feature/transcription-engine`
 
-* [ ] Create `src/transcriber.py`
-* [ ] Define `TranscriptionEngine` class
+* [x] Create `src/transcriber.py`
+* [x] Define `TranscriptionEngine` class
 
   * [ ] Add `__init__(self, model_size: str = "medium")`
 
@@ -32,6 +40,7 @@ This document is a live **vibe-coding tracker** and checklist. It guides coding 
     * [ ] Return plain string transcript
 * [ ] Manually test transcription of `.mp4` and `.wav` files
 * [ ] Ensure model runs with **CPU-only**, no GPU assumptions
+* [ ] Ensure model is downloaded into `E:\whisper-cache` by setting the `WHISPER_CACHE` env variable
 
 #### `feature/file-manager`
 
@@ -115,6 +124,7 @@ This document is a live **vibe-coding tracker** and checklist. It guides coding 
 * No GPU or cloud dependencies allowed
 * Always log file-level progress clearly
 * Use pathlib’s `Path` and type annotations
+* Whisper models must be cached in `E:\whisper-cache` using the `WHISPER_CACHE` environment variable
 
 ---
 
